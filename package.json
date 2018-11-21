@@ -1,0 +1,65 @@
+{
+  "name": "intl-equalizer",
+  "version": "0.0.1",
+  "description": "linter for locale json files",
+  "main": "index.js",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "intl-equalizer": "./dist/index.js"
+  },
+  "scripts": {
+    "test": "cross-env NODE_ENV=test jest",
+    "jest": "cross-env NODE_ENV=test jest --watch --verbose --coverage=false",
+    "build": "babel ./src -d dist",
+    "demo-run": "npm run build && node ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vtex/intl-equalizer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vtex/intl-equalizer/issues"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.2",
+    "babel-jest": "^22.2.2",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "cross-env": "^5.2.0",
+    "eslint": "^4.18.0",
+    "eslint-config-vtex": "^8.0.0",
+    "eslint-plugin-jest": "^21.12.2",
+    "jest": "^23.6.0",
+    "jest-mock-process": "^1.1.0",
+    "nodemon": "^1.18.4",
+    "watch": "^1.0.2"
+  },
+  "homepage": "https://github.com/vtex/intl-equalizer#readme",
+  "dependencies": {
+    "cli-table2": "^0.2.0",
+    "util": "^0.11.0"
+  }
+}
