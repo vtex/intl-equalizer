@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    "transform-es2015-modules-commonjs",
+    "babel-plugin-transform-object-rest-spread"
+  ],
+  "env": {
+    "test": {
+      "presets": ["env"]
+    },
+    "production": {
+      "presets": [
+        [
+          "env",
+          {
+            "modules": false
+          }
+        ]
+      ],
+      "plugins": ["external-helpers"]
+    }
+  }
+}
