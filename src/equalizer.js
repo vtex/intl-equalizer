@@ -2,7 +2,11 @@ import fs from 'fs'
 import path from 'path'
 import { ERRORS } from './constants'
 
-export default function equalize(languages, localesDirectory, referenceLocale) {
+export default function equalize({
+  languages,
+  localesDirectory,
+  referenceLocale,
+}) {
   const termsPerLanguage = {}
 
   walk(localesDirectory, languages, filepath => {

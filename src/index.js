@@ -13,11 +13,11 @@ if (languages.error) {
   throwError(languages.error, config.localesDirectory)
 }
 
-const result = equalize(
+const result = equalize({
   languages,
-  config.localesDirectory,
-  config.referenceLocale
-)
+  localesDirectory: config.localesDirectory,
+  referenceLocale: config.referenceLocale,
+})
 
 if (result.error) {
   throwError(result.error, result.data)

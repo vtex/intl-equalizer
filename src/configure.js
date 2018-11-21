@@ -1,7 +1,7 @@
 import path from 'path'
 
 export function configure() {
-  const packageJson = require(`${process.cwd()}/package.json`)
+  const packageJson = require(path.join(process.cwd(), 'package.json'))
 
   const referenceLocaleFromPackageJson =
     packageJson['intl-equalizer'] &&

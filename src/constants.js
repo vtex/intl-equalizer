@@ -15,5 +15,5 @@ export const MESSAGES = {
     colors.red(
       `❌ Error: Locale ${locale} is empty. Add some keys or delete it."`
     ),
-  SUCCESS: colors.yellow('✨ All keys are localized!'),
+  SUCCESS: colors.yellow('✨ All keys are perfectly localized!'),
 }
