@@ -13,7 +13,8 @@
     "test": "cross-env NODE_ENV=test jest",
     "jest": "cross-env NODE_ENV=test jest --watch --verbose --coverage=false",
     "build": "babel ./src --ignore */test,*/__mocks__ -d dist",
-    "demo-run": "npm run build && node ./dist/index.js"
+    "demo-run": "npm run build && node ./dist/index.js",
+    "postreleasy": "npm publish"
   },
   "repository": {
     "type": "git",
