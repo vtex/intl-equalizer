@@ -24,7 +24,7 @@ Or via npm:
 }
 ```
 
-**2)** And Intl-Equalizer config in your `package.json`:
+**2)** And Intl-Equalizer config in your `package.json` if you need to change the default values:
 
 ```json
 "intl-equalizer": {
@@ -32,3 +32,7 @@ Or via npm:
   "localeDirectory": "src/locales/"
 }
 ```
+
+> `referenceLocale` default value is `'en'`
+
+> `localeDirectory` default value is `'react/locales/'`
