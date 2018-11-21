@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { ERRORS } from './constants'
 
 export default function equalize(languages, localesDirectory, referenceLocale) {
   const termsPerLanguage = {}
@@ -7,13 +8,7 @@ export default function equalize(languages, localesDirectory, referenceLocale) {
   walk(localesDirectory, languages, filepath => {
     const language = path.basename(filepath, '.js').replace('.json', '')
 
-    let terms = null
-
-    if (filepath.indexOf('.json') > -1) {
-      terms = require(filepath)
-    } else if (languageJs) {
-      terms = require(filepath).default
-    }
+    const terms = require(filepath)
 
     Object.keys(terms).forEach(term => {
       if (!termsPerLanguage[language]) {
@@ -27,24 +22,41 @@ export default function equalize(languages, localesDirectory, referenceLocale) {
     })
   })
 
-  const missingTerms = {}
+  const hasEmptyLanguage = languages.some(
+    language =>
+      !termsPerLanguage[language] ||
+      Object.keys(termsPerLanguage[language]).length === 0
+  )
+
+  if (hasEmptyLanguage) {
+    return {
+      data: languages.find(
+        language =>
+          !termsPerLanguage[language] ||
+          Object.keys(termsPerLanguage[language]).length === 0
+      ),
+      error: ERRORS.ERROR_NO_KEYS_LOCALE,
+    }
+  }
+
+  const processedLanguages = {}
 
   Object.keys(termsPerLanguage[referenceLocale]).forEach(key => {
     languages.forEach(language => {
-      if (!missingTerms[language]) {
-        missingTerms[language] = {
+      if (!processedLanguages[language]) {
+        processedLanguages[language] = {
           missingKeys: [],
         }
       }
 
       if (!termsPerLanguage[language][key]) {
-        missingTerms[language].filepath = termsPerLanguage[
+        processedLanguages[language].filepath = termsPerLanguage[
           referenceLocale
         ].filepath
           .replace(`${referenceLocale}.js`, `${language}.js`)
           .replace(process.cwd(), '')
 
-        missingTerms[language].missingKeys.push({
+        processedLanguages[language].missingKeys.push({
           key,
           ...termsPerLanguage[referenceLocale][key],
         })
@@ -52,7 +64,7 @@ export default function equalize(languages, localesDirectory, referenceLocale) {
     })
   })
 
-  return { missingTerms }
+  return processedLanguages
 }
 
 function walk(dir, languages, callback) {

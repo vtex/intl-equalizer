@@ -1,23 +1,16 @@
 import equalize from './equalizer'
-import { ERRORS, MESSAGES } from './constants'
+import { configure } from './configure'
+import { throwError } from './errors'
 import { getAvailableLanguages } from './languages'
 import { createTable } from './table'
-import { configure } from './configure'
+import { MESSAGES } from './constants'
 
 const config = configure()
 
 const languages = getAvailableLanguages(config.localesDirectory)
 
-switch (languages.error) {
-  case ERRORS.ERROR_NO_LOCALE_FILES: {
-    console.error(MESSAGES.NO_LOCALE_FILES(config.localesDirectory))
-    process.exit(1)
-  }
-
-  case ERRORS.ERROR_NO_LOCALE_FOLDER: {
-    console.error(MESSAGES.NO_LOCALE_FOLDER(process.cwd()))
-    process.exit(1)
-  }
+if (languages.error) {
+  throwError(languages.error, config.localesDirectory)
 }
 
 const result = equalize(
@@ -26,12 +19,16 @@ const result = equalize(
   config.referenceLocale
 )
 
+if (result.error) {
+  throwError(result.error, result.data)
+}
+
 const hasMissingTerms = languages.some(
-  language => result.missingTerms[language].length !== 0
+  language => result[language].missingKeys.length !== 0
 )
 
 if (hasMissingTerms) {
-  createTable(result.missingTerms, config.referenceLocale)
+  createTable(result, config.referenceLocale)
   process.exit(1)
 } else {
   console.log(MESSAGES.SUCCESS)

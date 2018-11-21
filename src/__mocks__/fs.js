@@ -32,9 +32,21 @@ function readdirSync(directoryPath) {
   return mockFiles[directoryPath]
 }
 
+function isDirectory() {
+  return false
+}
+
+function isFile() {
+  return true
+}
+
 fs.__setMockFiles = __setMockFiles
 fs.__setMockFolder = __setMockFolder
 fs.readdirSync = readdirSync
+fs.statSync = () => ({
+  isDirectory,
+  isFile,
+})
 
 module.exports = fs
 // This mock was taken from Jest Docs
