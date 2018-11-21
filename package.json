@@ -38,6 +38,11 @@
       "es2015"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "babel-cli": "^6.26.0",
@@ -53,6 +58,7 @@
     "eslint": "^4.18.0",
     "eslint-config-vtex": "^8.0.0",
     "eslint-plugin-jest": "^21.12.2",
+    "husky": "^1.2.0",
     "jest": "^23.6.0",
     "jest-mock-process": "^1.1.0",
     "nodemon": "^1.18.4",
