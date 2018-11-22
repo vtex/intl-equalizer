@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import equalize from './equalizer'
 import { configure } from './configure'
 import { throwError } from './errors'
