@@ -26,10 +26,13 @@ Or via npm:
 
 **2)** And Intl-Equalizer config in your `package.json` if you need to change the default values:
 
-```json
-"intl-equalizer": {
-  "referenceLocale": "pt",
-  "localeDirectory": "src/locales/"
+```
+// package.json
+{
+  "intl-equalizer": {
+    "referenceLocale": "pt",
+    "localeDirectory": "src/locales/"
+  }
 }
 ```
 
