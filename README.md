@@ -1,4 +1,4 @@
-# Intl-Equalizer
+# 👯‍♂️ Intl-Equalizer
 
 A VTEX CLI for linting locale string files
 
