@@ -1,6 +1,6 @@
 {
   "name": "intl-equalizer",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "linter for locale json files",
   "main": "index.js",
   "files": [
