@@ -16,7 +16,7 @@ export function configure() {
   const localesDirectory =
     (localesDirectoryFromPackageJson &&
       path.join(process.cwd(), localesDirectoryFromPackageJson)) ||
-    path.join(process.cwd(), 'react', 'locales')
+    path.join(process.cwd(), 'messages')
 
   return {
     localesDirectory,
