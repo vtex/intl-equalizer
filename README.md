@@ -38,4 +38,4 @@ Or via npm:
 
 > `referenceLocale` default value is `'en'`
 
-> `localeDirectory` default value is `'react/locales/'`
+> `localeDirectory` default value is `'/messages'`
