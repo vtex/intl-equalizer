@@ -14,6 +14,7 @@
     "jest": "cross-env NODE_ENV=test jest --watch --verbose --coverage=false",
     "build": "babel ./src --ignore */test,*/__mocks__ -d dist",
     "demo-run": "npm run build && node ./dist/index.js",
+    "prepublishOnly": "npm run build",
     "postreleasy": "npm publish"
   },
   "repository": {
