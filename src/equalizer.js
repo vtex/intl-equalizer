@@ -54,12 +54,6 @@ export default function equalize({
       }
 
       if (!termsPerLanguage[language][key]) {
-        processedLanguages[language].filepath = termsPerLanguage[
-          referenceLocale
-        ].filepath
-          .replace(`${referenceLocale}.js`, `${language}.js`)
-          .replace(process.cwd(), '')
-
         processedLanguages[language].missingKeys.push({
           key,
           ...termsPerLanguage[referenceLocale][key],
