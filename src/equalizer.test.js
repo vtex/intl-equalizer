@@ -49,4 +49,22 @@ describe('Equalizer', () => {
     expect(result['en'].missingKeys.length).toEqual(0)
     expect(result['pt'].missingKeys.length).toEqual(0)
   })
+
+  fit('should return if keys are out of order', () => {
+    require('fs').__setMockFiles({
+      [`${process.cwd()}/src/__mocks__/outOfOrder/pt.json`]: '',
+      [`${process.cwd()}/src/__mocks__/outOfOrder/en.json`]: '',
+    })
+
+    const result = equalize({
+      languages: ['en', 'pt'],
+      localesDirectory: `${process.cwd()}/src/__mocks__/outOfOrder`,
+      referenceLocale: 'pt',
+    })
+
+    expect(result.en.wrongOrderKeys).toHaveLength(2)
+    expect(result.en.wrongOrderKeys[0].key).toBe('anotherExample')
+    expect(result.en.wrongOrderKeys[0].wrongLine).toBe(1)
+    expect(result.en.wrongOrderKeys[0].correctLine).toBe(2)
+  })
 })

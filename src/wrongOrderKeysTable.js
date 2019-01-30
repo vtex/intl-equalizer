@@ -1,5 +1,6 @@
 import Table from 'cli-table2'
 import colors from 'colors/safe'
+
 export function createTable(missingTerms, referenceLocale) {
   const table = new Table({
     chars: {

@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { ERRORS } from './constants'
 import fileReader from './fileReader'
+import { diffArrays } from 'diff'
 
 export default function equalize({
   languages,
@@ -32,10 +33,13 @@ export default function equalize({
   const processedLanguages = {}
 
   Object.keys(termsPerLanguage[referenceLocale]).forEach(key => {
+    const referenceOrder = Object.keys(termsPerLanguage[referenceLocale])
+
     languages.forEach(language => {
       if (!processedLanguages[language]) {
         processedLanguages[language] = {
           missingKeys: [],
+          wrongOrderKeys: [],
         }
       }
 
@@ -45,8 +49,49 @@ export default function equalize({
           ...termsPerLanguage[referenceLocale][key],
         })
       }
+
+      const languageOrder = Object.keys(termsPerLanguage[language])
+
+      processedLanguages[language].wrongOrderKeys = getCorrectLines(
+        referenceOrder,
+        languageOrder
+      )
     })
   })
 
   return processedLanguages
+}
+
+function getCorrectLines(referenceOrder, languageOrder) {
+  const diff = diffArrays(referenceOrder, languageOrder)
+
+  const correctLines = diff.reduce((chunks, line) => {
+    const key = line.value[0]
+    if (line.removed || line.added) {
+      if (!chunks[key]) {
+        chunks[key] = {}
+      }
+    }
+
+    if (line.removed) {
+      chunks[key] = {
+        ...chunks[key],
+        wrongLine: languageOrder.indexOf(key),
+      }
+    } else if (line.added) {
+      chunks[key] = {
+        ...chunks[key],
+        correctLine: referenceOrder.indexOf(key),
+      }
+    }
+
+    return chunks
+  }, {})
+
+  return Object.keys(correctLines).map(key => {
+    return {
+      key,
+      ...correctLines[key],
+    }
+  })
 }
