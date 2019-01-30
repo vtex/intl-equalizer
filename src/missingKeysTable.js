@@ -1,7 +1,7 @@
 import Table from 'cli-table2'
 import colors from 'colors/safe'
 
-export default function createTable(missingTerms, referenceLocale) {
+export default function createTable(result, referenceLocale) {
   const table = new Table({
     chars: {
       top: '═',
@@ -37,12 +37,12 @@ export default function createTable(missingTerms, referenceLocale) {
     { hAlign: 'center', content: colors.yellow('MISSING KEYS') },
   ])
 
-  Object.keys(missingTerms).forEach(countryName => {
+  Object.keys(result).forEach(countryName => {
     if (countryName === referenceLocale) return
 
     const country = countryName.toUpperCase()
-    const filepath = missingTerms[countryName].filepath
-    const missingKeys = missingTerms[countryName].missingKeys.reduce(
+    const filepath = result[countryName].filepath
+    const missingKeys = result[countryName].missingKeys.reduce(
       (acc, curr) => acc + curr.key + '\n',
       ''
     )

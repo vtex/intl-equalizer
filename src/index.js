@@ -39,7 +39,7 @@ const hasWrongOrderKeys = languages.some(
 )
 
 if (hasWrongOrderKeys) {
-  createWrongOrderKeysTable(result)
+  createWrongOrderKeysTable(result, config.referenceLocale)
   process.exit(1)
 }
 

@@ -50,7 +50,7 @@ describe('Equalizer', () => {
     expect(result['pt'].missingKeys.length).toEqual(0)
   })
 
-  fit('should return if keys are out of order', () => {
+  it('should return if keys are out of order', () => {
     require('fs').__setMockFiles({
       [`${process.cwd()}/src/__mocks__/outOfOrder/pt.json`]: '',
       [`${process.cwd()}/src/__mocks__/outOfOrder/en.json`]: '',

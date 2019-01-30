@@ -1,7 +1,7 @@
 import Table from 'cli-table2'
 import colors from 'colors/safe'
 
-export function createTable(missingTerms, referenceLocale) {
+export default function createTable(result, referenceLocale) {
   const table = new Table({
     chars: {
       top: '═',
@@ -22,7 +22,7 @@ export function createTable(missingTerms, referenceLocale) {
     },
     head: [
       {
-        colSpan: 3,
+        colSpan: 4,
         hAlign: 'center',
         content: colors.yellow(
           `REFERENCE LOCALE: ${referenceLocale.toUpperCase()}`
@@ -33,20 +33,24 @@ export function createTable(missingTerms, referenceLocale) {
 
   table.push([
     { hAlign: 'center', content: colors.yellow('LOCALE') },
-    { hAlign: 'center', content: colors.yellow('PATH') },
-    { hAlign: 'center', content: colors.yellow('MISSING KEYS') },
+    { hAlign: 'center', content: colors.yellow('KEY') },
+    { hAlign: 'center', content: colors.yellow('CURRENT LINE') },
+    { hAlign: 'center', content: colors.yellow('CORRECT LINE') },
   ])
 
-  Object.keys(missingTerms).forEach(countryName => {
+  Object.keys(result).forEach(countryName => {
     if (countryName === referenceLocale) return
 
     const country = countryName.toUpperCase()
-    const filepath = missingTerms[countryName].filepath
-    const missingKeys = missingTerms[countryName].missingKeys.reduce(
-      (acc, curr) => acc + curr.key + '\n',
-      ''
-    )
-    table.push([country, filepath, missingKeys])
+
+    result[countryName].wrongOrderKeys.forEach(currentKey => {
+      table.push([
+        country,
+        currentKey.key,
+        currentKey.wrongLine,
+        currentKey.correctLine,
+      ])
+    })
   })
 
   console.log(table.toString())
