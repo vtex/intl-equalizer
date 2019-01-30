@@ -21,7 +21,7 @@ const result = equalize({
 })
 
 if (result.error) {
-  throwError(result.error, result.data)
+  throwError(result.error.code, result.error.data)
 }
 
 const hasMissingTerms = languages.some(

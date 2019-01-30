@@ -15,8 +15,8 @@ describe('Equalizer', () => {
       referenceLocale: 'en',
     })
 
-    expect(result.data).toEqual('en')
-    expect(result.error).toEqual(ERRORS.ERROR_NO_KEYS_LOCALE)
+    expect(result.error.data).toEqual('en')
+    expect(result.error.code).toEqual(ERRORS.ERROR_NO_KEYS_LOCALE)
   })
 
   it('should return one missing key', () => {

@@ -18,12 +18,14 @@ export default function equalize({
 
   if (hasEmptyLanguage) {
     return {
-      data: languages.find(
-        language =>
-          !termsPerLanguage[language] ||
-          Object.keys(termsPerLanguage[language]).length === 0
-      ),
-      error: ERRORS.ERROR_NO_KEYS_LOCALE,
+      error: {
+        code: ERRORS.ERROR_NO_KEYS_LOCALE,
+        data: languages.find(
+          language =>
+            !termsPerLanguage[language] ||
+            Object.keys(termsPerLanguage[language]).length === 0
+        ),
+      },
     }
   }
 
