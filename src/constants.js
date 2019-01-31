@@ -10,7 +10,9 @@ export const MESSAGES = {
   COULD_NOT_WRITE_JSON: locale =>
     colors.red(`❌ Error: Could not write keys to ${locale}.json.`),
   NO_LOCALE_FILES: pathName =>
-    colors.red(`❌ Error: There are no locale files in "${pathName}.`),
+    colors.red(
+      `❌ Error: There are no locale files in "${pathName}. \n Only base locales are considered. (i.e. LOCALE.json)`
+    ),
   NO_LOCALE_FOLDER: pathName =>
     colors.red(`❌ Error: There is no locales folder in "${pathName}.`),
   ERROR_NO_KEYS_LOCALE: locale =>
