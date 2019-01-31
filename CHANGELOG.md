@@ -17,8 +17,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Updated `missingKeysTable` with new title
-- Updated `wrongOrderKeysTable` with new title
+- `missingKeysTable` with new title
+- `wrongOrderKeysTable` with new title
+- `NO_LOCALE_FILES` error message
 
 ## [2.0.1] - 2018-12-19
 
