@@ -14,7 +14,7 @@ export const MESSAGES = {
       `❌ Error: There are no locale files in "${pathName}. \n Only base locales are considered. (i.e. LOCALE.json)`
     ),
   NO_LOCALE_FOLDER: pathName =>
-    colors.red(`❌ Error: There is no locales folder in "${pathName}.`),
+    colors.red(`❌ Error: There are no locale files folder in "${pathName}.`),
   ERROR_NO_KEYS_LOCALE: locale =>
     colors.red(
       `❌ Error: Locale ${locale} is empty. Add some keys or delete it.`
