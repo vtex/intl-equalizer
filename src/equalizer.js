@@ -1,5 +1,3 @@
-import fs from 'fs'
-import path from 'path'
 import { ERRORS } from './constants'
 import fileReader from './fileReader'
 import { diffArrays } from 'diff'
