@@ -13,6 +13,7 @@
     "test": "cross-env NODE_ENV=test jest",
     "jest": "cross-env NODE_ENV=test jest --watch --verbose --coverage=false",
     "build": "babel ./src --ignore */test,*/__mocks__ -d dist",
+    "build:watch": "watch 'npm run build' src",
     "demo-run": "npm run build && node ./dist/index.js",
     "prepublishOnly": "npm run build",
     "postreleasy": "npm publish"
@@ -69,6 +70,7 @@
   "dependencies": {
     "cli-table2": "^0.2.0",
     "diff": "^4.0.1",
+    "commander": "^2.19.0",
     "util": "^0.11.0"
   }
 }
