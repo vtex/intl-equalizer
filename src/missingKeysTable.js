@@ -24,12 +24,20 @@ export default function createTable(result, referenceLocale) {
       {
         colSpan: 3,
         hAlign: 'center',
-        content: colors.yellow(
-          `REFERENCE LOCALE: ${referenceLocale.toUpperCase()}`
-        ),
+        content: colors.yellow(`MISSING KEYS}`),
       },
     ],
   })
+
+  table.push([
+    {
+      colSpan: 3,
+      hAlign: 'center',
+      content: colors.yellow(
+        `REFERENCE LOCALE: ${referenceLocale.toUpperCase()}`
+      ),
+    },
+  ])
 
   table.push([
     { hAlign: 'center', content: colors.yellow('LOCALE') },
