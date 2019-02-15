@@ -46,6 +46,7 @@ export default function createTable(result, referenceLocale) {
     { hAlign: 'center', content: colors.yellow('LOCALE') },
     { hAlign: 'center', content: colors.yellow('KEY') },
     { hAlign: 'center', content: colors.yellow('CURRENT LINE') },
+    { hAlign: 'center', content: colors.yellow('CORRECT LINE') },
   ])
 
   Object.keys(result).forEach(countryName => {

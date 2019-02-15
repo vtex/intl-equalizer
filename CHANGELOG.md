@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `commander` for optional parameters
 - `build:watch` script for watching changes
 - `intl-equalizer --fix` command to fix order based on the referenceLocale
+- `extraKeysTable` result if another locale has more keys than the referenceLocale
 
 ### Changed
 
