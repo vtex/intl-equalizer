@@ -39,3 +39,13 @@ Or via npm:
 > `referenceLocale` default value is `'en'`
 
 > `localeDirectory` default value is `'/messages'`
+
+# Optional Commands
+
+## Fix
+
+Command to fix the order of the locale keys based on the `referenceLocale`
+
+```
+intl-equalizer --fix
+```
