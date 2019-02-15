@@ -5,6 +5,7 @@ import { getAvailableLanguages } from './languages'
 import { MESSAGES } from './constants'
 import createMissingKeysTable from './missingKeysTable'
 import createWrongOrderKeysTable from './wrongOrderKeysTable'
+import createExtraKeysTable from './extraKeysTable'
 
 function start() {
   const config = configure()
@@ -23,6 +24,15 @@ function start() {
 
   if (result.error) {
     throwError(result.error.code, result.error.data)
+  }
+
+  const hasExtraKeys = languages.some(
+    language => result[language].extraKeys.length !== 0
+  )
+
+  if (hasExtraKeys) {
+    createExtraKeysTable(result, config.referenceLocale)
+    process.exit(1)
   }
 
   const hasMissingTerms = languages.some(

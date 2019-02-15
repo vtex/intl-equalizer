@@ -1,6 +1,5 @@
 import Table from 'cli-table2'
 import colors from 'colors/safe'
-import { MESSAGES } from './constants'
 
 export default function createTable(result, referenceLocale) {
   const table = new Table({
@@ -23,10 +22,10 @@ export default function createTable(result, referenceLocale) {
     },
     head: [
       {
-        colSpan: 4,
+        colSpan: 2,
         hAlign: 'center',
         content: colors.yellow(
-          `KEYS WITH DIFFERENT ORDER \n Run 'intl-equalizer --fix' to fix the order of the keys.`
+          `EXTRA KEYS \n These keys are missing from the reference locale.`
         ),
       },
     ],
@@ -34,7 +33,7 @@ export default function createTable(result, referenceLocale) {
 
   table.push([
     {
-      colSpan: 4,
+      colSpan: 2,
       hAlign: 'center',
       content: colors.yellow(
         `REFERENCE LOCALE: ${referenceLocale.toUpperCase()}`
@@ -44,8 +43,7 @@ export default function createTable(result, referenceLocale) {
 
   table.push([
     { hAlign: 'center', content: colors.yellow('LOCALE') },
-    { hAlign: 'center', content: colors.yellow('KEY') },
-    { hAlign: 'center', content: colors.yellow('CURRENT LINE') },
+    { hAlign: 'center', content: colors.yellow('EXTRA KEYS') },
   ])
 
   Object.keys(result).forEach(countryName => {
@@ -53,13 +51,8 @@ export default function createTable(result, referenceLocale) {
 
     const country = countryName.toUpperCase()
 
-    result[countryName].wrongOrderKeys.forEach(currentKey => {
-      table.push([
-        country,
-        currentKey.key,
-        currentKey.wrongLine,
-        currentKey.correctLine,
-      ])
+    result[countryName].extraKeys.forEach(currentKey => {
+      table.push([country, currentKey])
     })
   })
 

@@ -54,10 +54,21 @@ export default function equalize({
         referenceOrder,
         languageOrder
       )
+
+      processedLanguages[language].extraKeys = getExtraKeys(
+        Object.keys(termsPerLanguage[referenceLocale]),
+        Object.keys(termsPerLanguage[language])
+      )
     })
   })
 
   return processedLanguages
+}
+
+function getExtraKeys(referenceKeys, currentLanguageKeys) {
+  return currentLanguageKeys.filter(
+    key => !referenceKeys.some(currKey => currKey === key)
+  )
 }
 
 function getCorrectLines(referenceOrder, languageOrder) {
