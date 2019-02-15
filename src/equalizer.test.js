@@ -15,8 +15,8 @@ describe('Equalizer', () => {
       referenceLocale: 'en',
     })
 
-    expect(result.data).toEqual('en')
-    expect(result.error).toEqual(ERRORS.ERROR_NO_KEYS_LOCALE)
+    expect(result.error.data).toEqual('en')
+    expect(result.error.code).toEqual(ERRORS.ERROR_NO_KEYS_LOCALE)
   })
 
   it('should return one missing key', () => {
@@ -48,5 +48,23 @@ describe('Equalizer', () => {
 
     expect(result['en'].missingKeys.length).toEqual(0)
     expect(result['pt'].missingKeys.length).toEqual(0)
+  })
+
+  it('should return if keys are out of order', () => {
+    require('fs').__setMockFiles({
+      [`${process.cwd()}/src/__mocks__/outOfOrder/pt.json`]: '',
+      [`${process.cwd()}/src/__mocks__/outOfOrder/en.json`]: '',
+    })
+
+    const result = equalize({
+      languages: ['en', 'pt'],
+      localesDirectory: `${process.cwd()}/src/__mocks__/outOfOrder`,
+      referenceLocale: 'pt',
+    })
+
+    expect(result.en.wrongOrderKeys).toHaveLength(2)
+    expect(result.en.wrongOrderKeys[0].key).toBe('anotherExample')
+    expect(result.en.wrongOrderKeys[0].wrongLine).toBe(1)
+    expect(result.en.wrongOrderKeys[0].correctLine).toBe(2)
   })
 })

@@ -3,8 +3,9 @@ import equalize from './equalizer'
 import { configure } from './configure'
 import { throwError } from './errors'
 import { getAvailableLanguages } from './languages'
-import { createTable } from './table'
 import { MESSAGES } from './constants'
+import createMissingKeysTable from './missingKeysTable'
+import createWrongOrderKeysTable from './wrongOrderKeysTable'
 
 const config = configure()
 
@@ -21,7 +22,7 @@ const result = equalize({
 })
 
 if (result.error) {
-  throwError(result.error, result.data)
+  throwError(result.error.code, result.error.data)
 }
 
 const hasMissingTerms = languages.some(
@@ -29,9 +30,18 @@ const hasMissingTerms = languages.some(
 )
 
 if (hasMissingTerms) {
-  createTable(result, config.referenceLocale)
+  createMissingKeysTable(result, config.referenceLocale)
   process.exit(1)
-} else {
-  console.log(MESSAGES.SUCCESS)
-  process.exit(0)
 }
+
+const hasWrongOrderKeys = languages.some(
+  language => result[language].wrongOrderKeys.length !== 0
+)
+
+if (hasWrongOrderKeys) {
+  createWrongOrderKeysTable(result, config.referenceLocale)
+  process.exit(1)
+}
+
+console.log(MESSAGES.SUCCESS)
+process.exit(0)
