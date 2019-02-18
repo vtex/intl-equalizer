@@ -1,6 +1,6 @@
 {
   "name": "@vtex/intl-equalizer",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "linter for locale json files",
   "main": "index.js",
   "files": [
