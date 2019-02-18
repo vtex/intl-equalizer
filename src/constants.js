@@ -26,7 +26,7 @@ export const MESSAGES = {
     localeLength,
   }) =>
     colors.red(
-      `❌ Error: Could not fix locale ${locale.toUpperCase()} due to difference in locale size. \n ${referenceLocale.toUpperCase()} has ${referenceLocaleLength} keys. Although ${locale.toUpperCase()} has ${localeLength} keys.`
+      `❌ Error: Couldn't fix locale ${locale.toUpperCase()} due to differences on locale size. \n ${referenceLocale.toUpperCase()} has ${referenceLocaleLength} keys. Although, ${locale.toUpperCase()} has ${localeLength} keys.`
     ),
   WRITING_LOCALE: locale =>
     colors.yellow(`✏️  Writing sorted keys to ${locale}.json`),
