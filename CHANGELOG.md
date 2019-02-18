@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.0] - 2019-02-18
+
+### Added
+
+- `commander` for optional parameters
+- `build:watch` script for watching changes
+- `intl-equalizer --fix` command to fix order based on the referenceLocale
+- `extraKeysTable` result if another locale has more keys than the referenceLocale
+
+### Changed
+
+- `missingKeysTable` with new title
+- `wrongOrderKeysTable` with new title
+- `NO_LOCALE_FILES` error message
+
 ## [2.1.0] - 2019-02-15
 
 ### Added

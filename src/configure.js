@@ -1,6 +1,6 @@
 import path from 'path'
 
-export function configure() {
+export default function configure() {
   const packageJson = require(path.join(process.cwd(), 'package.json'))
 
   const referenceLocaleFromPackageJson =

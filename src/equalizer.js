@@ -1,5 +1,3 @@
-import fs from 'fs'
-import path from 'path'
 import { ERRORS } from './constants'
 import fileReader from './fileReader'
 import { diffArrays } from 'diff'
@@ -56,10 +54,21 @@ export default function equalize({
         referenceOrder,
         languageOrder
       )
+
+      processedLanguages[language].extraKeys = getExtraKeys(
+        Object.keys(termsPerLanguage[referenceLocale]),
+        Object.keys(termsPerLanguage[language])
+      )
     })
   })
 
   return processedLanguages
+}
+
+function getExtraKeys(referenceKeys, currentLanguageKeys) {
+  return currentLanguageKeys.filter(
+    key => !referenceKeys.some(currKey => currKey === key)
+  )
 }
 
 function getCorrectLines(referenceOrder, languageOrder) {

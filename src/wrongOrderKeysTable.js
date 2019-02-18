@@ -1,5 +1,6 @@
 import Table from 'cli-table2'
 import colors from 'colors/safe'
+import { MESSAGES } from './constants'
 
 export default function createTable(result, referenceLocale) {
   const table = new Table({
@@ -25,11 +26,21 @@ export default function createTable(result, referenceLocale) {
         colSpan: 4,
         hAlign: 'center',
         content: colors.yellow(
-          `REFERENCE LOCALE: ${referenceLocale.toUpperCase()}`
+          `KEYS WITH DIFFERENT ORDER \n Run 'intl-equalizer --fix' to fix the order of the keys.`
         ),
       },
     ],
   })
+
+  table.push([
+    {
+      colSpan: 4,
+      hAlign: 'center',
+      content: colors.yellow(
+        `REFERENCE LOCALE: ${referenceLocale.toUpperCase()}`
+      ),
+    },
+  ])
 
   table.push([
     { hAlign: 'center', content: colors.yellow('LOCALE') },

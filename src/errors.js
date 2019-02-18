@@ -1,6 +1,6 @@
 import { ERRORS, MESSAGES } from './constants'
 
-export function throwError(error, data) {
+export default function throwError(error, data) {
   switch (error) {
     case ERRORS.ERROR_NO_LOCALE_FILES: {
       console.error(MESSAGES.NO_LOCALE_FILES(data))

@@ -22,16 +22,18 @@ export default function createTable(result, referenceLocale) {
     },
     head: [
       {
-        colSpan: 3,
+        colSpan: 2,
         hAlign: 'center',
-        content: colors.yellow(`MISSING KEYS}`),
+        content: colors.yellow(
+          `EXTRA KEYS \n These keys are missing from the reference locale.`
+        ),
       },
     ],
   })
 
   table.push([
     {
-      colSpan: 3,
+      colSpan: 2,
       hAlign: 'center',
       content: colors.yellow(
         `REFERENCE LOCALE: ${referenceLocale.toUpperCase()}`
@@ -41,20 +43,17 @@ export default function createTable(result, referenceLocale) {
 
   table.push([
     { hAlign: 'center', content: colors.yellow('LOCALE') },
-    { hAlign: 'center', content: colors.yellow('PATH') },
-    { hAlign: 'center', content: colors.yellow('MISSING KEYS') },
+    { hAlign: 'center', content: colors.yellow('EXTRA KEYS') },
   ])
 
   Object.keys(result).forEach(countryName => {
     if (countryName === referenceLocale) return
 
     const country = countryName.toUpperCase()
-    const filepath = result[countryName].filepath
-    const missingKeys = result[countryName].missingKeys.reduce(
-      (acc, curr) => acc + curr.key + '\n',
-      ''
-    )
-    table.push([country, filepath, missingKeys])
+
+    result[countryName].extraKeys.forEach(currentKey => {
+      table.push([country, currentKey])
+    })
   })
 
   console.log(table.toString())
