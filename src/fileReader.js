@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import map from 'lodash/map'
 
 export default function fileReader({ languages, localesDirectory }) {
   const termsPerLanguage = languages.reduce((acc, lang) => {
