@@ -49,3 +49,7 @@ Command to fix the order of the locale keys based on the `referenceLocale`
 ```
 intl-equalizer --fix
 ```
+
+## All
+
+Using `intl-equalizer --all`, or its shorthand `intl-equalizer -a`, will override the fail-fast behavior and instead list all errors.
