@@ -24,7 +24,7 @@ export default function createTable(result, referenceLocale) {
       {
         colSpan: 3,
         hAlign: 'center',
-        content: colors.yellow(`MISSING KEYS}`),
+        content: colors.yellow(`MISSING KEYS`),
       },
     ],
   })

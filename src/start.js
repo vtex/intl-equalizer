@@ -7,7 +7,7 @@ import createMissingKeysTable from './missingKeysTable'
 import createWrongOrderKeysTable from './wrongOrderKeysTable'
 import createExtraKeysTable from './extraKeysTable'
 
-function start() {
+function start(options = {}) {
   const config = configure()
 
   const languages = getAvailableLanguages(config.localesDirectory)
@@ -32,7 +32,7 @@ function start() {
 
   if (hasExtraKeys) {
     createExtraKeysTable(result, config.referenceLocale)
-    process.exit(1)
+    if (!options.all) process.exit(1)
   }
 
   const hasMissingTerms = languages.some(
@@ -41,7 +41,7 @@ function start() {
 
   if (hasMissingTerms) {
     createMissingKeysTable(result, config.referenceLocale)
-    process.exit(1)
+    if (!options.all) process.exit(1)
   }
 
   const hasWrongOrderKeys = languages.some(
@@ -50,6 +50,10 @@ function start() {
 
   if (hasWrongOrderKeys) {
     createWrongOrderKeysTable(result, config.referenceLocale)
+    if (!options.all) process.exit(1)
+  }
+
+  if (options.all && (hasExtraKeys || hasMissingTerms || hasWrongOrderKeys)) {
     process.exit(1)
   }
 

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.3.0] - 2019-03-25
+
+### Added
+
+- `intl-equalizer --all`: suffix to list all errors.
+
 ## [2.2.1] - 2019-03-12
 
 ### Removed
