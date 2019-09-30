@@ -1,19 +1,21 @@
 import fs from 'fs'
+
 import { ERRORS } from './constants'
 
-export function getAvailableLanguages(dir) {
+export function getAvailableLanguages(directory, filesToIgnore = []) {
   let languages = []
 
   try {
     languages = fs
-      .readdirSync(dir)
+      .readdirSync(directory)
       .filter(
-        dir =>
-          (dir.includes('.json') || dir.includes('.js')) && !dir.includes('-')
+        fileName =>
+          (fileName.includes('.json') || fileName.includes('.js')) &&
+          !filesToIgnore.includes(fileName)
       )
-      .map(dir => {
-        if (dir.includes('.json')) return dir.replace('.json', '')
-        if (dir.includes('.js')) return dir.replace('.js', '')
+      .map(fileName => {
+        if (fileName.includes('.json')) return fileName.replace('.json', '')
+        if (fileName.includes('.js')) return fileName.replace('.js', '')
       })
 
     if (languages.length === 0) {
@@ -23,5 +25,19 @@ export function getAvailableLanguages(dir) {
     return { error: ERRORS.ERROR_NO_LOCALE_FOLDER }
   }
 
-  return languages
+  return languages.reduce(
+    (splittedLocales, locale) => {
+      if (locale.indexOf('-') > 0) {
+        splittedLocales.regionLocales.push(locale)
+      } else {
+        splittedLocales.generalLocales.push(locale)
+      }
+
+      return splittedLocales
+    },
+    {
+      generalLocales: [],
+      regionLocales: [],
+    }
+  )
 }

@@ -31,7 +31,8 @@ Or via npm:
 {
   "intl-equalizer": {
     "referenceLocale": "pt",
-    "localeDirectory": "src/locales/"
+    "localeDirectory": "src/locales/",
+    "filesToIgnore": ["context.json"]
   }
 }
 ```
@@ -39,6 +40,8 @@ Or via npm:
 > `referenceLocale` default value is `'en'`
 
 > `localeDirectory` default value is `'/messages'`
+
+> `filesToIgnore` default value is an empty array`
 
 # Optional Commands
 

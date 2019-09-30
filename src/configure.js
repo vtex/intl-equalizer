@@ -11,6 +11,9 @@ export default function configure() {
     packageJson['intl-equalizer'] &&
     packageJson['intl-equalizer'].localeDirectory
 
+  const filesToIgnoreFromPackageJson =
+    packageJson['intl-equalizer'] && packageJson['intl-equalizer'].filesToIgnore
+
   const referenceLocale = referenceLocaleFromPackageJson || 'en'
 
   const localesDirectory =
@@ -18,8 +21,11 @@ export default function configure() {
       path.join(process.cwd(), localesDirectoryFromPackageJson)) ||
     path.join(process.cwd(), 'messages')
 
+  const filesToIgnore = filesToIgnoreFromPackageJson || []
+
   return {
     localesDirectory,
     referenceLocale,
+    filesToIgnore,
   }
 }
