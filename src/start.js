@@ -1,4 +1,4 @@
-import { equalize } from './equalizer'
+import { equalize, equalizeRegionLocales } from './equalizer'
 import configure from './configure'
 import throwError from './errors'
 import { getAvailableLanguages } from './languages'
@@ -7,31 +7,35 @@ import createMissingKeysTable from './missingKeysTable'
 import createWrongOrderKeysTable from './wrongOrderKeysTable'
 import createExtraKeysTable from './extraKeysTable'
 
+function hasExtraKeys(languages, equalizedList) {
+  return languages.some(
+    language => equalizedList[language].extraKeys.length !== 0
+  )
+}
+
 function start(options = {}) {
-  const config = configure()
+  const { referenceLocale, localesDirectory } = configure()
 
-  const languages = getAvailableLanguages(config.localesDirectory)
+  const availableLanguages = getAvailableLanguages(localesDirectory)
 
-  if (languages.error) {
-    throwError(languages.error, config.localesDirectory)
+  if (availableLanguages.error) {
+    throwError(availableLanguages.error, localesDirectory)
   }
+
+  const languages = availableLanguages.generalLocales
 
   const result = equalize({
     languages,
-    localesDirectory: config.localesDirectory,
-    referenceLocale: config.referenceLocale,
+    localesDirectory,
+    referenceLocale,
   })
 
   if (result.error) {
     throwError(result.error.code, result.error.data)
   }
 
-  const hasExtraKeys = languages.some(
-    language => result[language].extraKeys.length !== 0
-  )
-
-  if (hasExtraKeys) {
-    createExtraKeysTable(result, config.referenceLocale)
+  if (hasExtraKeys(languages, result)) {
+    createExtraKeysTable(result, referenceLocale)
     if (!options.all) process.exit(1)
   }
 
@@ -40,7 +44,7 @@ function start(options = {}) {
   )
 
   if (hasMissingTerms) {
-    createMissingKeysTable(result, config.referenceLocale)
+    createMissingKeysTable(result, referenceLocale)
     if (!options.all) process.exit(1)
   }
 
@@ -49,11 +53,33 @@ function start(options = {}) {
   )
 
   if (hasWrongOrderKeys) {
-    createWrongOrderKeysTable(result, config.referenceLocale)
+    createWrongOrderKeysTable(result, referenceLocale)
     if (!options.all) process.exit(1)
   }
 
-  if (options.all && (hasExtraKeys || hasMissingTerms || hasWrongOrderKeys)) {
+  let hasExtraKeysRegion = false
+  if (availableLanguages.regionLocales.length > 0) {
+    const regionResult = equalizeRegionLocales({
+      regionLocales: availableLanguages.regionLocales,
+      localesDirectory,
+      referenceLocale,
+    })
+
+    hasExtraKeysRegion = hasExtraKeys(
+      availableLanguages.regionLocales,
+      regionResult
+    )
+
+    if (hasExtraKeysRegion) {
+      createExtraKeysTable(regionResult, referenceLocale)
+      if (!options.all) process.exit(1)
+    }
+  }
+
+  if (
+    options.all &&
+    (hasExtraKeys || hasMissingTerms || hasWrongOrderKeys || hasExtraKeysRegion)
+  ) {
     process.exit(1)
   }
 

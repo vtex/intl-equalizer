@@ -81,9 +81,7 @@ describe('Equalizer', () => {
       localesDirectory: `${process.cwd()}/src/__mocks__/outOfOrder`,
     })
 
-    console.log(result)
-
-    expect(result['en-US'].invalidKeys).toHaveLength(0)
-    expect(result['pt-PT'].invalidKeys).toHaveLength(1)
+    expect(result['en-US'].extraKeys).toHaveLength(0)
+    expect(result['pt-PT'].extraKeys).toHaveLength(1)
   })
 })

@@ -114,7 +114,7 @@ export function equalizeRegionLocales({
 
   regionLocales.forEach(region => {
     processedLanguages[region] = {
-      invalidKeys: getExtraKeys(
+      extraKeys: getExtraKeys(
         Object.keys(termsPerLanguage[referenceLocale]),
         Object.keys(termsPerLanguage[region])
       ),
