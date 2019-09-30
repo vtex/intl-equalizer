@@ -14,9 +14,12 @@ function hasExtraKeys(languages, equalizedList) {
 }
 
 function start(options = {}) {
-  const { referenceLocale, localesDirectory } = configure()
+  const { referenceLocale, localesDirectory, filesToIgnore } = configure()
 
-  const availableLanguages = getAvailableLanguages(localesDirectory)
+  const availableLanguages = getAvailableLanguages(
+    localesDirectory,
+    filesToIgnore
+  )
 
   if (availableLanguages.error) {
     throwError(availableLanguages.error, localesDirectory)
