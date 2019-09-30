@@ -1,4 +1,4 @@
-import equalize from './equalizer'
+import { equalize } from './equalizer'
 import configure from './configure'
 import throwError from './errors'
 import { getAvailableLanguages } from './languages'
