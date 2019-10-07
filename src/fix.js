@@ -8,7 +8,9 @@ import { MESSAGES } from './constants'
 export default function fix() {
   const config = configure()
 
-  const availableLanguages = getAvailableLanguages(config.localesDirectory)
+  const availableLanguages = getAvailableLanguages({
+    directory: config.localesDirectory,
+  })
 
   if (availableLanguages.error) {
     throwError(availableLanguages.error, config.localesDirectory)

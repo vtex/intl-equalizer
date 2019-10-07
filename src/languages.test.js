@@ -5,7 +5,7 @@ jest.mock('fs')
 
 describe('Languages', () => {
   it('should return error if doesnt have folder', () => {
-    const result = getAvailableLanguages()
+    const result = getAvailableLanguages({})
 
     expect(result.error).toEqual(ERRORS.ERROR_NO_LOCALE_FOLDER)
   })
@@ -13,7 +13,7 @@ describe('Languages', () => {
   it('should return error if doesnt have files', () => {
     require('fs').__setMockFolder('/react/locales/')
 
-    const result = getAvailableLanguages('/react/locales/')
+    const result = getAvailableLanguages({ directory: '/react/locales/' })
 
     expect(result.error).toEqual(ERRORS.ERROR_NO_LOCALE_FILES)
   })
@@ -26,7 +26,7 @@ describe('Languages', () => {
 
     const expectedResult = ['es', 'en']
 
-    const result = getAvailableLanguages('/react/locales')
+    const result = getAvailableLanguages({ directory: '/react/locales' })
 
     expect(result.generalLocales).toEqual(expectedResult)
   })
@@ -41,7 +41,7 @@ describe('Languages', () => {
     const expectedResultGeneral = ['es', 'en']
     const expectedResultRegion = ['en-US']
 
-    const result = getAvailableLanguages('/react/locales')
+    const result = getAvailableLanguages({ directory: '/react/locales' })
 
     expect(expectedResultGeneral).toEqual(result.generalLocales)
     expect(expectedResultRegion).toEqual(result.regionLocales)
@@ -57,7 +57,10 @@ describe('Languages', () => {
     const expectedResultGeneral = ['es']
     const expectedResultRegion = ['en-US']
 
-    const result = getAvailableLanguages('/react/locales', ['en.js'])
+    const result = getAvailableLanguages({
+      directory: '/react/locales',
+      filesToIgnore: ['en.js'],
+    })
 
     expect(expectedResultGeneral).toEqual(result.generalLocales)
     expect(expectedResultRegion).toEqual(result.regionLocales)

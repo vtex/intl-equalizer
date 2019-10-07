@@ -2,7 +2,7 @@ import fs from 'fs'
 
 import { ERRORS } from './constants'
 
-export function getAvailableLanguages(directory, filesToIgnore = []) {
+export function getAvailableLanguages({ directory, filesToIgnore = [] }) {
   let languages = []
 
   try {
