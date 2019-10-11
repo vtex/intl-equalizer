@@ -6,21 +6,22 @@ import fileWriter from './fileWriter'
 import { MESSAGES } from './constants'
 
 export default function fix() {
-  const config = configure()
+  const { filesToIgnore, localesDirectory, referenceLocale } = configure()
 
   const availableLanguages = getAvailableLanguages({
-    directory: config.localesDirectory,
+    directory: localesDirectory,
+    filesToIgnore,
   })
 
   if (availableLanguages.error) {
-    throwError(availableLanguages.error, config.localesDirectory)
+    throwError(availableLanguages.error, localesDirectory)
   }
 
-  const languages = languages.generalLocales
+  const languages = availableLanguages.generalLocales
 
   const termsPerLanguage = fileReader({
     languages,
-    localesDirectory: config.localesDirectory,
+    localesDirectory,
   })
 
   const failedSortLanguages = []
@@ -28,13 +29,13 @@ export default function fix() {
   const sortedLanguages = languages.reduce((accLanguages, locale) => {
     const localeKeysLength = Object.keys(termsPerLanguage[locale]).length
     const referenceLocaleKeysLength = Object.keys(
-      termsPerLanguage[config.referenceLocale]
+      termsPerLanguage[referenceLocale]
     ).length
 
     if (localeKeysLength !== referenceLocaleKeysLength) {
       console.log(
         MESSAGES.ERROR_COULD_NOT_FIX({
-          referenceLocale: config.referenceLocale,
+          referenceLocale,
           locale,
           referenceLocaleLength: referenceLocaleKeysLength,
           localeLength: localeKeysLength,
@@ -48,7 +49,7 @@ export default function fix() {
     }
 
     const sortedLanguage = Object.keys(
-      termsPerLanguage[config.referenceLocale]
+      termsPerLanguage[referenceLocale]
     ).reduce(
       (acc, key) => ({
         ...acc,
@@ -67,8 +68,8 @@ export default function fix() {
     sortedLanguages,
     failedSortLanguages,
     locales: languages,
-    localesDirectory: config.localesDirectory,
-    referenceLocale: config.referenceLocale,
+    localesDirectory,
+    referenceLocale,
   })
 
   console.log(MESSAGES.SUCCESS_FIX)
