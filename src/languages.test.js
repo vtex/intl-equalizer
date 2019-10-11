@@ -3,9 +3,9 @@ import { ERRORS } from './constants'
 
 jest.mock('fs')
 
-describe('languages', () => {
+describe('Languages', () => {
   it('should return error if doesnt have folder', () => {
-    const result = getAvailableLanguages()
+    const result = getAvailableLanguages({})
 
     expect(result.error).toEqual(ERRORS.ERROR_NO_LOCALE_FOLDER)
   })
@@ -13,7 +13,7 @@ describe('languages', () => {
   it('should return error if doesnt have files', () => {
     require('fs').__setMockFolder('/react/locales/')
 
-    const result = getAvailableLanguages('/react/locales/')
+    const result = getAvailableLanguages({ directory: '/react/locales/' })
 
     expect(result.error).toEqual(ERRORS.ERROR_NO_LOCALE_FILES)
   })
@@ -26,22 +26,43 @@ describe('languages', () => {
 
     const expectedResult = ['es', 'en']
 
-    const result = getAvailableLanguages('/react/locales')
+    const result = getAvailableLanguages({ directory: '/react/locales' })
 
-    expect(result).toEqual(expectedResult)
+    expect(result.generalLocales).toEqual(expectedResult)
   })
 
-  it('should ignore langague files with region', () => {
+  it('should split language files into general and with region', () => {
     require('fs').__setMockFiles({
       '/react/locales/es.json': 'content',
       '/react/locales/en.js': 'content',
       '/react/locales/en-US.json': 'content',
     })
 
-    const expectedResult = ['es', 'en']
+    const expectedResultGeneral = ['es', 'en']
+    const expectedResultRegion = ['en-US']
 
-    const result = getAvailableLanguages('/react/locales')
+    const result = getAvailableLanguages({ directory: '/react/locales' })
 
-    expect(result).toEqual(expectedResult)
+    expect(expectedResultGeneral).toEqual(result.generalLocales)
+    expect(expectedResultRegion).toEqual(result.regionLocales)
+  })
+
+  it('should ignore files listed on the filesToIgnore option', () => {
+    require('fs').__setMockFiles({
+      '/react/locales/es.json': 'content',
+      '/react/locales/en.js': 'content',
+      '/react/locales/en-US.json': 'content',
+    })
+
+    const expectedResultGeneral = ['es']
+    const expectedResultRegion = ['en-US']
+
+    const result = getAvailableLanguages({
+      directory: '/react/locales',
+      filesToIgnore: ['en.js'],
+    })
+
+    expect(expectedResultGeneral).toEqual(result.generalLocales)
+    expect(expectedResultRegion).toEqual(result.regionLocales)
   })
 })

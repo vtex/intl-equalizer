@@ -1,4 +1,4 @@
-import equalize from './equalizer'
+import { equalize, equalizeRegionLocales } from './equalizer'
 import { ERRORS } from './constants'
 
 jest.mock('fs')
@@ -66,5 +66,22 @@ describe('Equalizer', () => {
     expect(result.en.wrongOrderKeys[0].key).toBe('anotherExample')
     expect(result.en.wrongOrderKeys[0].wrongLine).toBe(1)
     expect(result.en.wrongOrderKeys[0].correctLine).toBe(2)
+  })
+
+  it('should validate invalid keys for regionLocales', () => {
+    require('fs').__setMockFiles({
+      [`${process.cwd()}/src/__mocks__/outOfOrder/pt-PT.json`]: '',
+      [`${process.cwd()}/src/__mocks__/outOfOrder/en-US.json`]: '',
+      [`${process.cwd()}/src/__mocks__/outOfOrder/en.json`]: '',
+    })
+
+    const result = equalizeRegionLocales({
+      regionLocales: ['pt-PT', 'en-US'],
+      referenceLocale: 'en',
+      localesDirectory: `${process.cwd()}/src/__mocks__/outOfOrder`,
+    })
+
+    expect(result['en-US'].extraKeys).toHaveLength(0)
+    expect(result['pt-PT'].extraKeys).toHaveLength(1)
   })
 })

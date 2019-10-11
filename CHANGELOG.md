@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.0] - 2019-10-11
+
+### Added
+
+- `filesToIgnore` option to the configs.
+
+### Changed
+
+- Validate extra keys on region specific files.
+
 ## [2.3.0] - 2019-03-25
 
 ### Added

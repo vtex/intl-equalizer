@@ -8,11 +8,15 @@ import { MESSAGES } from './constants'
 export default function fix() {
   const config = configure()
 
-  const languages = getAvailableLanguages(config.localesDirectory)
+  const availableLanguages = getAvailableLanguages({
+    directory: config.localesDirectory,
+  })
 
-  if (languages.error) {
-    throwError(languages.error, config.localesDirectory)
+  if (availableLanguages.error) {
+    throwError(availableLanguages.error, config.localesDirectory)
   }
+
+  const languages = languages.generalLocales
 
   const termsPerLanguage = fileReader({
     languages,
