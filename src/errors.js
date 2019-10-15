@@ -5,16 +5,19 @@ export default function throwError(error, data) {
     case ERRORS.ERROR_NO_LOCALE_FILES: {
       console.error(MESSAGES.NO_LOCALE_FILES(data))
       process.exit(1)
+      break
     }
 
     case ERRORS.ERROR_NO_LOCALE_FOLDER: {
       console.error(MESSAGES.NO_LOCALE_FOLDER(process.cwd()))
       process.exit(1)
+      break
     }
 
     case ERRORS.ERROR_NO_KEYS_LOCALE: {
       console.error(MESSAGES.ERROR_NO_KEYS_LOCALE(data))
       process.exit(1)
+      break
     }
   }
 }

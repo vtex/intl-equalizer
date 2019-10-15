@@ -10,7 +10,7 @@
     "intl-equalizer": "./dist/index.js"
   },
   "scripts": {
-    "lint": "cd src && eslint --quiet --fix --ext js,ts,tsx .",
+    "lint": "cd src && eslint --fix --ext js,ts,tsx .",
     "test": "cross-env NODE_ENV=test jest",
     "jest": "cross-env NODE_ENV=test jest --watch --verbose --coverage=false",
     "build": "babel ./src --ignore */test,*/__mocks__ -d dist",
@@ -43,7 +43,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm test"
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn test"
     }
   },
   "devDependencies": {

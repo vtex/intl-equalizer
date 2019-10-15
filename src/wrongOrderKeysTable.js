@@ -1,6 +1,5 @@
 import Table from 'cli-table3'
 import colors from 'colors/safe'
-import { MESSAGES } from './constants'
 
 export default function createTable(result, referenceLocale) {
   const table = new Table({

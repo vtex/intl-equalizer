@@ -1,6 +1,7 @@
 import path from 'path'
 
 export default function configure() {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const packageJson = require(path.join(process.cwd(), 'package.json'))
 
   const referenceLocaleFromPackageJson =

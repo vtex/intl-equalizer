@@ -1,7 +1,7 @@
 // __mocks__/fs.js
 'use strict'
 
-const path = require('path')
+import path from 'path'
 
 const fs = jest.genMockFromModule('fs')
 
