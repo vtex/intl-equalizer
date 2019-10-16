@@ -1,0 +1,11 @@
+{
+  "extends": "vtex",
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "rules": {
+    "no-console": "off"
+  }
+}
