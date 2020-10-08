@@ -14,7 +14,7 @@
     "lint-fix": "eslint --fix --ext js,ts,tsx .",
     "test": "cross-env NODE_ENV=test jest",
     "jest": "cross-env NODE_ENV=test jest --watch --verbose --coverage=false",
-    "build": "babel ./src --ignore */test,*/__mocks__ -d dist",
+    "build": "babel ./src --ignore */test,*/__mocks__,*/__fixtures__ -d dist",
     "build:watch": "watch 'npm run build' src",
     "demo-run": "npm run build && node ./dist/index.js",
     "prepublishOnly": "npm run build",

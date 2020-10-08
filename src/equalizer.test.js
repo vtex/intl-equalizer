@@ -6,12 +6,12 @@ jest.mock('fs')
 describe('Equalizer', () => {
   it('should return error if doesnt have keys in a file', () => {
     require('fs').__setMockFiles({
-      [`${process.cwd()}/src/__mocks__/emptyLocales/en.js`]: '',
-      [`${process.cwd()}/src/__mocks__/emptyLocales/pt.json`]: '',
+      [`${process.cwd()}/src/__fixtures__/emptyLocales/en.js`]: '',
+      [`${process.cwd()}/src/__fixtures__/emptyLocales/pt.json`]: '',
     })
     const result = equalize({
       languages: ['en', 'pt'],
-      localesDirectory: `${process.cwd()}/src/__mocks__/emptyLocales`,
+      localesDirectory: `${process.cwd()}/src/__fixtures__/emptyLocales`,
       referenceLocale: 'en',
     })
 
@@ -21,13 +21,13 @@ describe('Equalizer', () => {
 
   it('should return one missing key', () => {
     require('fs').__setMockFiles({
-      [`${process.cwd()}/src/__mocks__/locales/pt.json`]: '',
-      [`${process.cwd()}/src/__mocks__/locales/en.js`]: '',
+      [`${process.cwd()}/src/__fixtures__/locales/pt.json`]: '',
+      [`${process.cwd()}/src/__fixtures__/locales/en.js`]: '',
     })
 
     const result = equalize({
       languages: ['en', 'pt'],
-      localesDirectory: `${process.cwd()}/src/__mocks__/locales`,
+      localesDirectory: `${process.cwd()}/src/__fixtures__/locales`,
       referenceLocale: 'pt',
     })
 
@@ -36,13 +36,13 @@ describe('Equalizer', () => {
 
   it('should return equal locales', () => {
     require('fs').__setMockFiles({
-      [`${process.cwd()}/src/__mocks__/equalLocales/pt.json`]: '',
-      [`${process.cwd()}/src/__mocks__/equalLocales/en.js`]: '',
+      [`${process.cwd()}/src/__fixtures__/equalLocales/pt.json`]: '',
+      [`${process.cwd()}/src/__fixtures__/equalLocales/en.js`]: '',
     })
 
     const result = equalize({
       languages: ['en', 'pt'],
-      localesDirectory: `${process.cwd()}/src/__mocks__/equalLocales`,
+      localesDirectory: `${process.cwd()}/src/__fixtures__/equalLocales`,
       referenceLocale: 'pt',
     })
 
@@ -52,13 +52,13 @@ describe('Equalizer', () => {
 
   it('should return if keys are out of order', () => {
     require('fs').__setMockFiles({
-      [`${process.cwd()}/src/__mocks__/outOfOrder/pt.json`]: '',
-      [`${process.cwd()}/src/__mocks__/outOfOrder/en.json`]: '',
+      [`${process.cwd()}/src/__fixtures__/outOfOrder/pt.json`]: '',
+      [`${process.cwd()}/src/__fixtures__/outOfOrder/en.json`]: '',
     })
 
     const result = equalize({
       languages: ['en', 'pt'],
-      localesDirectory: `${process.cwd()}/src/__mocks__/outOfOrder`,
+      localesDirectory: `${process.cwd()}/src/__fixtures__/outOfOrder`,
       referenceLocale: 'pt',
     })
 
@@ -70,15 +70,15 @@ describe('Equalizer', () => {
 
   it('should validate invalid keys for regionLocales', () => {
     require('fs').__setMockFiles({
-      [`${process.cwd()}/src/__mocks__/outOfOrder/pt-PT.json`]: '',
-      [`${process.cwd()}/src/__mocks__/outOfOrder/en-US.json`]: '',
-      [`${process.cwd()}/src/__mocks__/outOfOrder/en.json`]: '',
+      [`${process.cwd()}/src/__fixtures__/outOfOrder/pt-PT.json`]: '',
+      [`${process.cwd()}/src/__fixtures__/outOfOrder/en-US.json`]: '',
+      [`${process.cwd()}/src/__fixtures__/outOfOrder/en.json`]: '',
     })
 
     const result = equalizeRegionLocales({
       regionLocales: ['pt-PT', 'en-US'],
       referenceLocale: 'en',
-      localesDirectory: `${process.cwd()}/src/__mocks__/outOfOrder`,
+      localesDirectory: `${process.cwd()}/src/__fixtures__/outOfOrder`,
     })
 
     expect(result['en-US'].extraKeys).toHaveLength(0)
