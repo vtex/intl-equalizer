@@ -45,15 +45,16 @@ export default function createTable(result, referenceLocale) {
     { hAlign: 'center', content: colors.yellow('MISSING KEYS') },
   ])
 
-  Object.keys(result).forEach(countryName => {
+  Object.keys(result).forEach((countryName) => {
     if (countryName === referenceLocale) return
 
     const country = countryName.toUpperCase()
-    const filepath = result[countryName].filepath
+    const { filepath } = result[countryName]
     const missingKeys = result[countryName].missingKeys.reduce(
-      (acc, curr) => acc + curr.key + '\n',
+      (acc, curr) => `${acc + curr.key}\n`,
       ''
     )
+
     table.push([country, filepath, missingKeys])
   })
 

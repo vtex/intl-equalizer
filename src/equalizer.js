@@ -5,7 +5,7 @@ import fileReader from './fileReader'
 
 function getExtraKeys(referenceKeys, currentLanguageKeys) {
   return currentLanguageKeys.filter(
-    key => !referenceKeys.some(currKey => currKey === key)
+    (key) => !referenceKeys.some((currKey) => currKey === key)
   )
 }
 
@@ -14,6 +14,7 @@ function getCorrectLines(referenceOrder, languageOrder) {
 
   const correctLines = diff.reduce((chunks, line) => {
     const key = line.value[0]
+
     if (line.removed || line.added) {
       if (!chunks[key]) {
         chunks[key] = {}
@@ -35,7 +36,7 @@ function getCorrectLines(referenceOrder, languageOrder) {
     return chunks
   }, {})
 
-  return Object.keys(correctLines).map(key => {
+  return Object.keys(correctLines).map((key) => {
     return {
       key,
       ...correctLines[key],
@@ -47,7 +48,7 @@ export function equalize({ languages, localesDirectory, referenceLocale }) {
   const termsPerLanguage = fileReader({ languages, localesDirectory })
 
   const hasEmptyLanguage = languages.some(
-    language =>
+    (language) =>
       !termsPerLanguage[language] ||
       Object.keys(termsPerLanguage[language]).length === 0
   )
@@ -57,7 +58,7 @@ export function equalize({ languages, localesDirectory, referenceLocale }) {
       error: {
         code: ERRORS.ERROR_NO_KEYS_LOCALE,
         data: languages.find(
-          language =>
+          (language) =>
             !termsPerLanguage[language] ||
             Object.keys(termsPerLanguage[language]).length === 0
         ),
@@ -67,10 +68,10 @@ export function equalize({ languages, localesDirectory, referenceLocale }) {
 
   const processedLanguages = {}
 
-  Object.keys(termsPerLanguage[referenceLocale]).forEach(key => {
+  Object.keys(termsPerLanguage[referenceLocale]).forEach((key) => {
     const referenceOrder = Object.keys(termsPerLanguage[referenceLocale])
 
-    languages.forEach(language => {
+    languages.forEach((language) => {
       if (!processedLanguages[language]) {
         processedLanguages[language] = {
           missingKeys: [],
@@ -112,7 +113,7 @@ export function equalizeRegionLocales({
 
   const processedLanguages = {}
 
-  regionLocales.forEach(region => {
+  regionLocales.forEach((region) => {
     processedLanguages[region] = {
       extraKeys: getExtraKeys(
         Object.keys(termsPerLanguage[referenceLocale]),

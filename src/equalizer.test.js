@@ -31,7 +31,7 @@ describe('Equalizer', () => {
       referenceLocale: 'pt',
     })
 
-    expect(result['en'].missingKeys.length).toEqual(1)
+    expect(result.en.missingKeys).toHaveLength(1)
   })
 
   it('should return equal locales', () => {
@@ -46,8 +46,8 @@ describe('Equalizer', () => {
       referenceLocale: 'pt',
     })
 
-    expect(result['en'].missingKeys.length).toEqual(0)
-    expect(result['pt'].missingKeys.length).toEqual(0)
+    expect(result.en.missingKeys).toHaveLength(0)
+    expect(result.pt.missingKeys).toHaveLength(0)
   })
 
   it('should return if keys are out of order', () => {

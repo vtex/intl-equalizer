@@ -9,13 +9,12 @@ export function getAvailableLanguages({ directory, filesToIgnore = [] }) {
     languages = fs
       .readdirSync(directory)
       .filter(
-        fileName =>
+        (fileName) =>
           (fileName.includes('.json') || fileName.includes('.js')) &&
           !filesToIgnore.includes(fileName)
       )
-      .map(fileName => {
-        if (fileName.includes('.json')) return fileName.replace('.json', '')
-        if (fileName.includes('.js')) return fileName.replace('.js', '')
+      .map((fileName) => {
+        return fileName.replace(/\.(json|js)/, '')
       })
 
     if (languages.length === 0) {

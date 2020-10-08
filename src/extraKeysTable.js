@@ -46,12 +46,12 @@ export default function createTable(result, referenceLocale) {
     { hAlign: 'center', content: colors.yellow('EXTRA KEYS') },
   ])
 
-  Object.keys(result).forEach(countryName => {
+  Object.keys(result).forEach((countryName) => {
     if (countryName === referenceLocale) return
 
     const country = countryName.toUpperCase()
 
-    result[countryName].extraKeys.forEach(currentKey => {
+    result[countryName].extraKeys.forEach((currentKey) => {
       table.push([country, currentKey])
     })
   })

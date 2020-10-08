@@ -9,7 +9,7 @@ import createExtraKeysTable from './extraKeysTable'
 
 function hasExtraKeys(languages, equalizedList) {
   return languages.some(
-    language => equalizedList[language].extraKeys.length !== 0
+    (language) => equalizedList[language].extraKeys.length !== 0
   )
 }
 
@@ -43,7 +43,7 @@ function start(options = {}) {
   }
 
   const hasMissingTerms = languages.some(
-    language => result[language].missingKeys.length !== 0
+    (language) => result[language].missingKeys.length !== 0
   )
 
   if (hasMissingTerms) {
@@ -52,7 +52,7 @@ function start(options = {}) {
   }
 
   const hasWrongOrderKeys = languages.some(
-    language => result[language].wrongOrderKeys.length !== 0
+    (language) => result[language].wrongOrderKeys.length !== 0
   )
 
   if (hasWrongOrderKeys) {
@@ -61,6 +61,7 @@ function start(options = {}) {
   }
 
   let hasExtraKeysRegion = false
+
   if (availableLanguages.regionLocales.length > 0) {
     const regionResult = equalizeRegionLocales({
       regionLocales: availableLanguages.regionLocales,

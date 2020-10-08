@@ -42,6 +42,7 @@ export default function fix() {
         })
       )
       failedSortLanguages.push(locale)
+
       return {
         ...accLanguages,
         [locale]: termsPerLanguage[locale],

@@ -1,4 +1,5 @@
 // __mocks__/fs.js
+
 'use strict'
 
 import path from 'path'
@@ -9,6 +10,7 @@ const fs = jest.genMockFromModule('fs')
 // what the files on the "mock" filesystem should look like when any of the
 // `fs` APIs are used.
 let mockFiles = Object.create(null)
+
 function __setMockFiles(newMockFiles) {
   mockFiles = Object.create(null)
   for (const file in newMockFiles) {
@@ -17,6 +19,7 @@ function __setMockFiles(newMockFiles) {
     if (!mockFiles[dir]) {
       mockFiles[dir] = []
     }
+
     mockFiles[dir].push(path.basename(file))
   }
 }

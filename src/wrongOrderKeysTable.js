@@ -48,12 +48,12 @@ export default function createTable(result, referenceLocale) {
     { hAlign: 'center', content: colors.yellow('CORRECT LINE') },
   ])
 
-  Object.keys(result).forEach(countryName => {
+  Object.keys(result).forEach((countryName) => {
     if (countryName === referenceLocale) return
 
     const country = countryName.toUpperCase()
 
-    result[countryName].wrongOrderKeys.forEach(currentKey => {
+    result[countryName].wrongOrderKeys.forEach((currentKey) => {
       table.push([
         country,
         currentKey.key,
