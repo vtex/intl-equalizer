@@ -6,6 +6,7 @@ import { MESSAGES } from './constants'
 import createMissingKeysTable from './missingKeysTable'
 import createWrongOrderKeysTable from './wrongOrderKeysTable'
 import createExtraKeysTable from './extraKeysTable'
+import { logSyntaxErrors } from './syntaxErrors'
 
 function hasExtraKeys(languages, equalizedList) {
   return languages.some(
@@ -21,8 +22,10 @@ function start(options = {}) {
     filesToIgnore,
   })
 
-  if (availableLanguages.error) {
+  if ('error' in availableLanguages) {
     throwError(availableLanguages.error, localesDirectory)
+
+    return
   }
 
   const languages = availableLanguages.generalLocales
@@ -35,6 +38,18 @@ function start(options = {}) {
 
   if (result.error) {
     throwError(result.error.code, result.error.data)
+
+    return
+  }
+
+  const hasSyntaxErrors = languages.some(
+    (language) => result[language].syntaxErrors.length > 0
+  )
+
+  if (hasSyntaxErrors) {
+    // @ts-ignore: FIXME
+    logSyntaxErrors(languages, result)
+    if (!options.all) process.exit(1)
   }
 
   if (hasExtraKeys(languages, result)) {
@@ -82,7 +97,11 @@ function start(options = {}) {
 
   if (
     options.all &&
-    (hasExtraKeys || hasMissingTerms || hasWrongOrderKeys || hasExtraKeysRegion)
+    (hasExtraKeys ||
+      hasMissingTerms ||
+      hasWrongOrderKeys ||
+      hasExtraKeysRegion ||
+      hasSyntaxErrors)
   ) {
     process.exit(1)
   }

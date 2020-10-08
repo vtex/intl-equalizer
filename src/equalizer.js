@@ -1,4 +1,5 @@
 import { diffArrays } from 'diff'
+import { parse } from 'intl-messageformat-parser'
 
 import { ERRORS } from './constants'
 import fileReader from './fileReader'
@@ -13,7 +14,7 @@ function getCorrectLines(referenceOrder, languageOrder) {
   const diff = diffArrays(referenceOrder, languageOrder)
 
   const correctLines = diff.reduce((chunks, line) => {
-    const key = line.value[0]
+    const [key] = line.value
 
     if (line.removed || line.added) {
       if (!chunks[key]) {
@@ -66,24 +67,45 @@ export function equalize({ languages, localesDirectory, referenceLocale }) {
     }
   }
 
+  /** @type {import('./syntaxErrors').EqualizeResult} */
   const processedLanguages = {}
 
-  Object.keys(termsPerLanguage[referenceLocale]).forEach((key) => {
-    const referenceOrder = Object.keys(termsPerLanguage[referenceLocale])
+  const referenceOrder = Object.keys(termsPerLanguage[referenceLocale])
 
+  Object.keys(termsPerLanguage[referenceLocale]).forEach((key) => {
     languages.forEach((language) => {
       if (!processedLanguages[language]) {
         processedLanguages[language] = {
           missingKeys: [],
           wrongOrderKeys: [],
+          syntaxErrors: [],
+          extraKeys: [],
         }
       }
 
-      if (!termsPerLanguage[language][key]) {
+      const languageTranslation = termsPerLanguage[language][key]
+
+      if (!languageTranslation) {
         processedLanguages[language].missingKeys.push({
           key,
           ...termsPerLanguage[referenceLocale][key],
         })
+      } else {
+        try {
+          // eslint-disable-next-line no-unused-vars
+          const parsedMessage = parse(languageTranslation, {
+            captureLocation: true,
+          })
+
+          // TODO: check if the AST of `parsedMessage` is roughly the same
+          // as the reference locale
+        } catch (err) {
+          processedLanguages[language].syntaxErrors.push({
+            key,
+            error: err,
+            message: languageTranslation,
+          })
+        }
       }
 
       const languageOrder = Object.keys(termsPerLanguage[language])

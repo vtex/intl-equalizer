@@ -1,22 +1,22 @@
 {
-  "plugins": [
-    "transform-es2015-modules-commonjs",
-    "babel-plugin-transform-object-rest-spread"
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-typescript"
   ],
   "env": {
     "test": {
-      "presets": ["env"]
+      "presets": ["@babel/preset-env"]
     },
     "production": {
       "presets": [
         [
-          "env",
+          "@babel/preset-env",
           {
             "modules": false
           }
         ]
       ],
-      "plugins": ["external-helpers"]
+      "plugins": ["@babel/plugin-external-helpers"]
     }
   }
 }

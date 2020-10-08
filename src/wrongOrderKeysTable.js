@@ -1,5 +1,5 @@
 import Table from 'cli-table3'
-import colors from 'colors/safe'
+import chalk from 'chalk'
 
 export default function createTable(result, referenceLocale) {
   const table = new Table({
@@ -24,7 +24,7 @@ export default function createTable(result, referenceLocale) {
       {
         colSpan: 4,
         hAlign: 'center',
-        content: colors.yellow(
+        content: chalk.yellow(
           `KEYS WITH DIFFERENT ORDER \n Run 'intl-equalizer --fix' to fix the order of the keys.`
         ),
       },
@@ -35,17 +35,17 @@ export default function createTable(result, referenceLocale) {
     {
       colSpan: 4,
       hAlign: 'center',
-      content: colors.yellow(
+      content: chalk.yellow(
         `REFERENCE LOCALE: ${referenceLocale.toUpperCase()}`
       ),
     },
   ])
 
   table.push([
-    { hAlign: 'center', content: colors.yellow('LOCALE') },
-    { hAlign: 'center', content: colors.yellow('KEY') },
-    { hAlign: 'center', content: colors.yellow('CURRENT LINE') },
-    { hAlign: 'center', content: colors.yellow('CORRECT LINE') },
+    { hAlign: 'center', content: chalk.yellow('LOCALE') },
+    { hAlign: 'center', content: chalk.yellow('KEY') },
+    { hAlign: 'center', content: chalk.yellow('CURRENT LINE') },
+    { hAlign: 'center', content: chalk.yellow('CORRECT LINE') },
   ])
 
   Object.keys(result).forEach((countryName) => {
