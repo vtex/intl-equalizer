@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.5.0] - 2020-10-14
+
+### Added
+
+- Validation of ICU message syntax, and log all messages errors.
+
+### Changed
+
+- Upgrade babel packages to version 7.
+
 ## [2.4.2] - 2019-10-16
 
 ### Changed

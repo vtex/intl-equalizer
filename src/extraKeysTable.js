@@ -1,5 +1,5 @@
 import Table from 'cli-table3'
-import colors from 'colors/safe'
+import chalk from 'chalk'
 
 export default function createTable(result, referenceLocale) {
   const table = new Table({
@@ -24,7 +24,7 @@ export default function createTable(result, referenceLocale) {
       {
         colSpan: 2,
         hAlign: 'center',
-        content: colors.yellow(
+        content: chalk.yellow(
           `EXTRA KEYS \n These keys are missing from the reference locale.`
         ),
       },
@@ -35,23 +35,23 @@ export default function createTable(result, referenceLocale) {
     {
       colSpan: 2,
       hAlign: 'center',
-      content: colors.yellow(
+      content: chalk.yellow(
         `REFERENCE LOCALE: ${referenceLocale.toUpperCase()}`
       ),
     },
   ])
 
   table.push([
-    { hAlign: 'center', content: colors.yellow('LOCALE') },
-    { hAlign: 'center', content: colors.yellow('EXTRA KEYS') },
+    { hAlign: 'center', content: chalk.yellow('LOCALE') },
+    { hAlign: 'center', content: chalk.yellow('EXTRA KEYS') },
   ])
 
-  Object.keys(result).forEach(countryName => {
+  Object.keys(result).forEach((countryName) => {
     if (countryName === referenceLocale) return
 
     const country = countryName.toUpperCase()
 
-    result[countryName].extraKeys.forEach(currentKey => {
+    result[countryName].extraKeys.forEach((currentKey) => {
       table.push([country, currentKey])
     })
   })

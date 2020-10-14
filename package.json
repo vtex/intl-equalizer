@@ -1,6 +1,6 @@
 {
   "name": "@vtex/intl-equalizer",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "description": "linter for locale json files",
   "main": "index.js",
   "files": [
@@ -10,15 +10,17 @@
     "intl-equalizer": "./dist/index.js"
   },
   "scripts": {
-    "lint": "cd src && eslint --fix --ext js,ts,tsx .",
+    "lint": "eslint --ext js,ts,tsx .",
+    "lint-fix": "eslint --fix --ext js,ts,tsx .",
     "test": "cross-env NODE_ENV=test jest",
     "jest": "cross-env NODE_ENV=test jest --watch --verbose --coverage=false",
-    "build": "babel ./src --ignore */test,*/__mocks__ -d dist",
+    "build": "babel ./src --extensions '.js,.ts' --ignore */test,*/__mocks__,*/__fixtures__ -d dist",
     "build:watch": "watch 'npm run build' src",
     "demo-run": "npm run build && node ./dist/index.js",
     "prepublishOnly": "npm run build",
     "postreleasy": "npm publish"
   },
+  "homepage": "https://github.com/vtex/intl-equalizer#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vtex/intl-equalizer.git"
@@ -36,42 +38,49 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
     ]
   },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint",
+      "pre-commit": "lint-staged",
       "pre-push": "yarn test"
     }
   },
+  "lint-staged": {
+    "*.{ts,js,tsx,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
+  },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-jest": "^22.2.2",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
-    "cross-env": "^6.0.3",
-    "eslint": "^6.5.1",
-    "eslint-config-vtex": "^11.1.0",
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-external-helpers": "^7.10.4",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/diff": "^4.0.2",
+    "@types/node": "^14.11.5",
+    "@vtex/prettier-config": "^0.3.1",
+    "babel-jest": "^26.5.2",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.10.0",
+    "eslint-config-vtex": "^12.8.6",
     "eslint-plugin-jest": "^22.19.0",
-    "husky": "^3.0.9",
-    "jest": "^24.9.0",
-    "prettier": "^1.18.2",
-    "typescript": "^3.6.4",
+    "husky": "^4.3.0",
+    "jest": "^26.5.2",
+    "lint-staged": "^10.4.0",
+    "prettier": "^2.1.2",
+    "releasy": "^1.11.1",
+    "typescript": "^4.0.3",
     "watch": "^1.0.2"
   },
-  "homepage": "https://github.com/vtex/intl-equalizer#readme",
   "dependencies": {
+    "chalk": "^4.1.0",
     "cli-table3": "^0.5.1",
     "commander": "^3.0.2",
     "diff": "^4.0.1",
+    "intl-messageformat-parser": "^6.0.9",
     "util": "^0.12.1"
   }
 }

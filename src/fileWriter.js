@@ -1,4 +1,5 @@
 import fs from 'fs'
+
 import { MESSAGES } from './constants'
 
 export default function writeFile({
@@ -8,10 +9,10 @@ export default function writeFile({
   localesDirectory,
   referenceLocale,
 }) {
-  locales.forEach(locale => {
+  locales.forEach((locale) => {
     if (
       locale === referenceLocale ||
-      failedSortLanguages.find(failedLocale => failedLocale === locale)
+      failedSortLanguages.find((failedLocale) => failedLocale === locale)
     ) {
       return
     }

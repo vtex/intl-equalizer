@@ -6,10 +6,11 @@ import { MESSAGES } from './constants'
 import createMissingKeysTable from './missingKeysTable'
 import createWrongOrderKeysTable from './wrongOrderKeysTable'
 import createExtraKeysTable from './extraKeysTable'
+import { logSyntaxErrors } from './syntaxErrors'
 
 function hasExtraKeys(languages, equalizedList) {
   return languages.some(
-    language => equalizedList[language].extraKeys.length !== 0
+    (language) => equalizedList[language].extraKeys.length !== 0
   )
 }
 
@@ -21,8 +22,10 @@ function start(options = {}) {
     filesToIgnore,
   })
 
-  if (availableLanguages.error) {
+  if ('error' in availableLanguages) {
     throwError(availableLanguages.error, localesDirectory)
+
+    return
   }
 
   const languages = availableLanguages.generalLocales
@@ -35,6 +38,18 @@ function start(options = {}) {
 
   if (result.error) {
     throwError(result.error.code, result.error.data)
+
+    return
+  }
+
+  const hasSyntaxErrors = languages.some(
+    (language) => result[language].syntaxErrors.length > 0
+  )
+
+  if (hasSyntaxErrors) {
+    // @ts-ignore: FIXME
+    logSyntaxErrors(languages, result)
+    if (!options.all) process.exit(1)
   }
 
   if (hasExtraKeys(languages, result)) {
@@ -43,7 +58,7 @@ function start(options = {}) {
   }
 
   const hasMissingTerms = languages.some(
-    language => result[language].missingKeys.length !== 0
+    (language) => result[language].missingKeys.length !== 0
   )
 
   if (hasMissingTerms) {
@@ -52,7 +67,7 @@ function start(options = {}) {
   }
 
   const hasWrongOrderKeys = languages.some(
-    language => result[language].wrongOrderKeys.length !== 0
+    (language) => result[language].wrongOrderKeys.length !== 0
   )
 
   if (hasWrongOrderKeys) {
@@ -61,6 +76,7 @@ function start(options = {}) {
   }
 
   let hasExtraKeysRegion = false
+
   if (availableLanguages.regionLocales.length > 0) {
     const regionResult = equalizeRegionLocales({
       regionLocales: availableLanguages.regionLocales,
@@ -81,7 +97,11 @@ function start(options = {}) {
 
   if (
     options.all &&
-    (hasExtraKeys || hasMissingTerms || hasWrongOrderKeys || hasExtraKeysRegion)
+    (hasExtraKeys ||
+      hasMissingTerms ||
+      hasWrongOrderKeys ||
+      hasExtraKeysRegion ||
+      hasSyntaxErrors)
   ) {
     process.exit(1)
   }

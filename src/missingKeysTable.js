@@ -1,5 +1,5 @@
 import Table from 'cli-table3'
-import colors from 'colors/safe'
+import chalk from 'chalk'
 
 export default function createTable(result, referenceLocale) {
   const table = new Table({
@@ -24,7 +24,7 @@ export default function createTable(result, referenceLocale) {
       {
         colSpan: 3,
         hAlign: 'center',
-        content: colors.yellow(`MISSING KEYS`),
+        content: chalk.yellow(`MISSING KEYS`),
       },
     ],
   })
@@ -33,27 +33,28 @@ export default function createTable(result, referenceLocale) {
     {
       colSpan: 3,
       hAlign: 'center',
-      content: colors.yellow(
+      content: chalk.yellow(
         `REFERENCE LOCALE: ${referenceLocale.toUpperCase()}`
       ),
     },
   ])
 
   table.push([
-    { hAlign: 'center', content: colors.yellow('LOCALE') },
-    { hAlign: 'center', content: colors.yellow('PATH') },
-    { hAlign: 'center', content: colors.yellow('MISSING KEYS') },
+    { hAlign: 'center', content: chalk.yellow('LOCALE') },
+    { hAlign: 'center', content: chalk.yellow('PATH') },
+    { hAlign: 'center', content: chalk.yellow('MISSING KEYS') },
   ])
 
-  Object.keys(result).forEach(countryName => {
+  Object.keys(result).forEach((countryName) => {
     if (countryName === referenceLocale) return
 
     const country = countryName.toUpperCase()
-    const filepath = result[countryName].filepath
+    const { filepath } = result[countryName]
     const missingKeys = result[countryName].missingKeys.reduce(
-      (acc, curr) => acc + curr.key + '\n',
+      (acc, curr) => `${acc + curr.key}\n`,
       ''
     )
+
     table.push([country, filepath, missingKeys])
   })
 

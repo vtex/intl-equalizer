@@ -19,5 +19,10 @@ export default function throwError(error, data) {
       process.exit(1)
       break
     }
+
+    default: {
+      console.error('Unknown error')
+      process.exit(1)
+    }
   }
 }
