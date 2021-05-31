@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Fixed
 - Fix `--all` option always return error
-- Fix when pass an invalid option to run the command like without any option
+- Fix the behavior when running the script with an invalid option
 
 ## [2.5.0] - 2020-10-14
 
