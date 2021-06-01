@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.5.1] - 2021-06-01
+
 ## Fixed
 - Fix `--all` option always return error
 - Fix the behavior when running the script with an invalid option
