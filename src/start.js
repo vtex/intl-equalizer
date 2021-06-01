@@ -97,7 +97,7 @@ function start(options = {}) {
 
   if (
     options.all &&
-    (hasExtraKeys ||
+    (hasExtraKeys(languages, result) ||
       hasMissingTerms ||
       hasWrongOrderKeys ||
       hasExtraKeysRegion ||
